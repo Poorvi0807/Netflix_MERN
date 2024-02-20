@@ -1,10 +1,29 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from "styled-components"
 import BackgroundImage from '../components/BackgroundImage'
 import Header from '../components/Header'
+import { createUserWithEmailAndPassword } from 'firebase/auth';
+import { firebaseAuth } from '../utils/firebase-config';
 
 export default function Signup(){
-  return <Container>
+
+  const [showPassword,setShowPassword] = useState(false);
+  const [formValues,setFormValues] = useState({
+    email: "",
+    password: "",
+  });
+
+  const handleSigniIn= async()=>{
+    // console.log(formValues);
+    try {
+      const {email,password} =formValues;
+      await createUserWithEmailAndPassword(firebaseAuth,email,password);
+      
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  return <Container showPassword={showPassword}>
    <BackgroundImage />
    <div className='content'>
    <Header />
@@ -15,11 +34,17 @@ export default function Signup(){
     <h6>Ready to watch? Enter your email to create or restart membership</h6>
    </div>
    <div className='form'>
-    <input type='email' placeholder='Email Address' name='email'/>
-    <input type='password' placeholder='Password' name='password'/>
-    <button>Get Started</button>
+    <input type='email' placeholder='Email Address' name='email' value={formValues.email} onChange={(e)=>setFormValues({...formValues,[e.target.name]: e.target.value,})}/>
+    {
+       showPassword && (<input type='password' placeholder='Password' name='password' value={formValues.password} onChange={(e)=>setFormValues({...formValues,[e.target.name]: e.target.value,})}/>)
+    }
+    
+    {
+      !showPassword && (<button onClick={()=> setShowPassword(true)}>Get Started</button>
+    )}
+    
    </div>
-   <button>Log In</button>
+   <button onClick={handleSigniIn}>Sign Up</button>
    </div>
    </div>
    
@@ -34,7 +59,7 @@ position: relative;
     top: 0;
     left: 0;
     background-color: rgba(0,0,0,0.5);
-    heightL 100vh;
+    height: 100vh;
     width:100vw;
     display:grid;
     grid-template-rows:15vh 85vh;
@@ -50,7 +75,7 @@ position: relative;
       }
       .form{
         display: grid;
-         /*grid-template-columns: */
+         grid-template-columns:${({showPassword})=>showPassword ? "1fr 1fr" : "2fr 1fr"};
          width:60%;
          input{
           color:black;
