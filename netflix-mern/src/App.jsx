@@ -3,7 +3,7 @@ import {BrowserRouter,Route,Routes} from "react-router-dom";
 import Netflix from './pages/Netflix';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
-
+import Player from './pages/Player';
 
 const App = () => {
   return (
@@ -11,6 +11,7 @@ const App = () => {
       <Routes>
         <Route exact path='/login' element={<Login />}></Route>
         <Route exact path='/signup' element={<Signup />}></Route>
+        <Route exact path='/player' element={<Player />}></Route>
         <Route exact path='/' element={<Netflix />}></Route>
       </Routes>
     </BrowserRouter>
