@@ -3,8 +3,8 @@ import styled from "styled-components"
 import BackgroundImage from '../components/BackgroundImage'
 import Header from '../components/Header'
 
-const Signup = () => {
-  return<container>
+export default function Signup(){
+  return <Container>
    <BackgroundImage />
    <Header />
    <div className='body flex column a-center j-center'>
@@ -15,11 +15,14 @@ const Signup = () => {
    </div>
    <div className='form'>
     <input type='email' placeholder='Email Address' name='email'/>
-    <input type='password' placeholder='Email Password' name='password'/>
+    <input type='password' placeholder='Password' name='password'/>
+    <button>Get Started</button>
    </div>
+   <button>Log In</button>
    </div>
-  </container>
+  </Container>
   
 }
 
-export default Signup
+const Container = styled.div``;
+

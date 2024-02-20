@@ -1,11 +1,12 @@
 import React from 'react'
-
-const BackgroundImage = () => {
+import background from "../assets/login.jpg"
+import styled from 'styled-components'
+export default function BackgroundImage () {
   return (
-    <div>
-      
-    </div>
+    <Container>
+      <img src={background} alt='background'/>
+    </Container>
   )
 }
 
-export default BackgroundImage
+
