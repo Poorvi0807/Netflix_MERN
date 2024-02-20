@@ -40,11 +40,11 @@ export default function Signup(){
     <h6>Ready to watch? Enter your email to create or restart membership</h6>
    </div>
    <div className='form'>
-    <input type='email' placeholder='Email Address' name='email' value={formValues.email} onChange={(e)=>setFormValues({...formValues,[e.target.name]: e.target.value,})}/>
-    {
-       showPassword && (<input type='password' placeholder='Password' name='password' value={formValues.password} onChange={(e)=>setFormValues({...formValues,[e.target.name]: e.target.value,})}/>)
-    }
-    
+    <input type='email' placeholder='Email Address' name='email' value={formValues.email} onChange={(e) => setFormValues({ ...formValues, [e.target.name]: e.target.value })} />
+{
+  showPassword && (<input type='password' placeholder='Password' name='password' value={formValues.password} onChange={(e) => setFormValues({ ...formValues, [e.target.name]: e.target.value })} />)
+}
+
     {
       !showPassword && (<button onClick={()=> setShowPassword(true)}>Get Started</button>
     )}
@@ -87,7 +87,7 @@ position: relative;
           color:black;
           border:none;
           padding:1.5rem;
-          font-size;1.2rem;
+          font-size:1.2rem;
           border: 1px solid black;
           &:focus{
             outline: none;
