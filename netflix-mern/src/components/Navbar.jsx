@@ -4,8 +4,8 @@ import logo from "../assets/logo.png";
 import {FaSearch} from "react-icons/fa";
 import {FaPowerOff} from "react-icons/fa";
 import { firebaseAuth } from '../utils/firebase-config';
-import { Link } from 'react-router-dom';
-
+import { Link, useNavigate } from 'react-router-dom';
+import { onAuthStateChanged, signOut } from 'firebase/auth';
 export default function Navbar({isScrolled}) {
     
     const links=[
@@ -15,16 +15,17 @@ export default function Navbar({isScrolled}) {
         {name:"My List", link:"/mylist"}
     ];
 
+    const navigate=useNavigate();
+    onAuthStateChanged(firebaseAuth, (currentUser) => {
+        if (!currentUser) navigate("/");
+      });
     const [showSearch,setShowSearch]=useState(false);  // showing and hidding the search
     const [inputHover, setInputHover] =useState(false);
-    const signOut = () => {
-        // Add your sign out logic here
-        console.log("Signing out...");
-    };
+ 
 
   return (
     <Container>
-        <nav className={`flex ${isScrolled ? "scrolled": ""}`}>
+        <nav className={`flex ${isScrolled ? "scrolled" : ""}`}>
            <div className='left flex a-center'>
            <div className='brand flex a-center j-center'>
              <img src={logo} alt='logo' />
@@ -57,7 +58,8 @@ export default function Navbar({isScrolled}) {
                     }}
                   />
             </div>
-            <button onClick={()=>signOut(firebaseAuth)}>
+            <button onClick={() => { signOut(firebaseAuth); }}>
+
                 <FaPowerOff />
             </button>
            </div>
@@ -65,91 +67,182 @@ export default function Navbar({isScrolled}) {
     </Container>
   )
 }
-
 const Container = styled.div`
-.scrolled{
+  .scrolled {
     background-color: black;
-}
-nav{
+  }
+  nav {
     position: sticky;
-    top:0;
-    height:6.5rem;
-    width:100%;
-    justify-content:space-between;
-    position:fixed;
+    top: 0;
+    height: 6.5rem;
+    width: 100%;
+    justify-content: space-between;
+    position: fixed;
+    top: 0;
     z-index: 2;
     padding: 0 4rem;
     align-items: center;
     transition: 0.3s ease-in-out;
-    .left{
-        gap:2rem;
-        .brand{
-            img{
-                height:4rem;
-            }
+    .left {
+      gap: 2rem;
+      .brand {
+        img {
+          height: 4rem;
         }
-        .links{
-            list-style-type: none;
-            gap:2rem;
-            li{
-                a{
-                    color: white;
-                    text-decoration: none;
-                }
-            }
+      }
+      .links {
+        list-style-type: none;
+        gap: 2rem;
+        li {
+          a {
+            color: white;
+            text-decoration: none;
+          }
         }
+      }
     }
-    .right{
-        gap: 1rem;
-        button{
-            background-color:transparent;
-            border:none;
-            cursor:pointer;
-            &:focus{
-                outline:none;
-            }
-            svg{
-                color: #f34242;
-                font-size:1.2rem;
-            }
+    .right {
+      gap: 1rem;
+      button {
+        background-color: transparent;
+        border: none;
+        cursor: pointer;
+        &:focus {
+          outline: none;
         }
-        .search{
-            display:flex;
-            gap:0.4rem;
-            align-items:center;
-            justify-content: center;
-            padding: 0.2rem;
-            padding-left:0.5rem;
-            button{
-                background-color: transparent;
-                svg{
-                    color:white;
-                }
-            }
-            input{
-                width:0;
-                opacity:0;
-                visibility:hidden;
-                transition: 0.3s ease-in-out;
-                background-color:transparent;
-                border:none;
-                color:white;
-                &:focus{
-                    outline:none;
-                }
-
-            }
+        svg {
+          color: #f34242;
+          font-size: 1.2rem;
         }
-        .show-search{
-            border: 1px solid black;
-            background-color:rgba(0,0,0,0.6);
+      }
+      .search {
+        display: flex;
+        gap: 0.4rem;
+        align-items: center;
+        justify-content: center;
+        padding: 0.2rem;
+        padding-left: 0.5rem;
+        button {
+          background-color: transparent;
+          border: none;
+          &:focus {
+            outline: none;
+          }
+          svg {
+            color: white;
+            font-size: 1.2rem;
+          }
         }
-        input{
-            width:100%;
-            opacity:1;
-            visibility:visible;
-            padding: 0.3rem;
+        input {
+          width: 0;
+          opacity: 0;
+          visibility: hidden;
+          transition: 0.3s ease-in-out;
+          background-color: transparent;
+          border: none;
+          color: white;
+          &:focus {
+            outline: none;
+          }
         }
+      }
+      .show-search {
+        border: 1px solid white;
+        background-color: rgba(0, 0, 0, 0.6);
+        input {
+          width: 100%;
+          opacity: 1;
+          visibility: visible;
+          padding: 0.3rem;
+        }
+      }
     }
-}
+  }
 `;
+// const Container = styled.div`
+// .scrolled{
+//     background-color: black;
+// }
+// nav{
+//     position: sticky;
+//     top:0;
+//     height:6.5rem;
+//     width:100%;
+//     justify-content:space-between;
+//     position:fixed;
+//     z-index: 2;
+//     padding: 0 4rem;
+//     align-items: center;
+//     transition: 0.3s ease-in-out;
+//     .left{
+//         gap:2rem;
+//         .brand{
+//             img{
+//                 height:4rem;
+//             }
+//         }
+//         .links{
+//             list-style-type: none;
+//             gap:2rem;
+//             li{
+//                 a{
+//                     color: white;
+//                     text-decoration: none;
+//                 }
+//             }
+//         }
+//     }
+//     .right{
+//         gap: 1rem;
+//         button{
+//             background-color:transparent;
+//             border:none;
+//             cursor:pointer;
+//             &:focus{
+//                 outline:none;
+//             }
+//             svg{
+//                 color: #f34242;
+//                 font-size:1.2rem;
+//             }
+//         }
+//         .search{
+//             display:flex;
+//             gap:0.4rem;
+//             align-items:center;
+//             justify-content: center;
+//             padding: 0.2rem;
+//             padding-left:0.5rem;
+//             button{
+//                 background-color: transparent;
+//                 svg{
+//                     color:white;
+//                 }
+//             }
+//             input{
+//                 width:0;
+//                 opacity:0;
+//                 visibility:hidden;
+//                 transition: 0.3s ease-in-out;
+//                 background-color:transparent;
+//                 border:none;
+//                 color:white;
+//                 &:focus{
+//                     outline:none;
+//                 }
+
+//             }
+//         }
+//         .show-search{
+//             border: 1px solid black;
+//             background-color:rgba(0,0,0,0.6);
+//         }
+//         input{
+//             width:100%;
+//             opacity:1;
+//             visibility:visible;
+//             padding: 0.3rem;
+//         }
+//     }
+// }
+// `;
