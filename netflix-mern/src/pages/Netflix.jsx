@@ -27,7 +27,29 @@ export default function Netflix() {
     <div>
       <Navbar isScrolled={isScrolled} />
       <div className='hero'>
-        <img />
+      <img
+          src={backgroundImage}
+          alt="background"
+          className="background-image"
+        />
+      <div className="container">
+          <div className="logo">
+            <img src={MovieLogo} alt="Movie Logo" />
+          </div>
+          <div className="buttons flex">
+            <button
+              onClick={() => navigate("/player")}
+              className="flex j-center a-center"
+            >
+              <FaPlay />
+              Play
+            </button>
+            <button className="flex j-center a-center">
+              <AiOutlineInfoCircle />
+              More Info
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   )
