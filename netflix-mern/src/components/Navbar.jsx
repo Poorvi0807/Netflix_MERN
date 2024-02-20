@@ -142,6 +142,13 @@ nav{
         }
         .show-search{
             border: 1px solid black;
+            background-color:rgba(0,0,0,0.6);
+        }
+        input{
+            width:100%;
+            opacity:1;
+            visibility:visible;
+            padding: 0.3rem;
         }
     }
 }
