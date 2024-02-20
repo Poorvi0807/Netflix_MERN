@@ -1,11 +1,22 @@
 import React from 'react'
+import styled from 'styled-components'
+import logo from "../assets/logo.png"
+import { useNavigate } from 'react-router-dom'
 
-const Header = () => {
+export default function Header(props) {
+
+    const navigate = useNavigate();
   return (
-    <div>
-      
-    </div>
+    <Container>
+      <div className='logo'>
+        <img src={logo} alt=''/>
+      </div>
+      <button onClick={()=>navigate(props.login?"/login" : "/signup")}>
+        {props.login? "Log In" : "Sign In"}
+      </button>
+    </Container>
   )
 }
 
-export default Header
+const Container = styled.div``;
+
